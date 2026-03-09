@@ -49,8 +49,6 @@ namespace ConWerter.Models
 
         static public void PlaySound(string text)
         {
-            var blah = MorseCode;
-
             foreach (char c in text.ToLower())
             {
                 if (MorseCode.TryGetValue(c, out List<char> code))
@@ -73,6 +71,23 @@ namespace ConWerter.Models
                     Debug.WriteLine("Failed to convert character: " + c);
                 }
             }
+        }
+
+        static public string InvertMorse(string cw)
+        {
+            string phrase = "";
+            foreach (string c in cw.ToLower().Split(" "))
+            {
+                foreach ((char key, List<char> encoded) in MorseCode)
+                {
+                    string encodedStr = new string(encoded.ToArray());
+                    if (encodedStr == c)
+                    {
+                        phrase += key.ToString();
+                    }
+                }
+            }
+            return phrase;
         }
     }
 }

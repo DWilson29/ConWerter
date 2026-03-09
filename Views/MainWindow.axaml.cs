@@ -12,10 +12,17 @@ namespace ConWerter.Views
             InitializeComponent();
         }
 
-        private void Button_OnClick(object? sender, RoutedEventArgs e)
+        private void Button_Phrase(object? sender, RoutedEventArgs e)
         {
             if (Phrase.Text == null) return;
             Converter.PlaySound(Phrase.Text);
+        }
+
+        private void Button_Cw(object? sender, RoutedEventArgs e)
+        {
+            if (CW.Text == null) return;
+            string value = Converter.InvertMorse(CW.Text);
+            Debug.WriteLine(value);
         }
     }
 }

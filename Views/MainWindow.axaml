@@ -14,11 +14,19 @@
              to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:MainWindowViewModel/>
     </Design.DataContext>
+	<Grid RowDefinitions="Auto, *, Auto"
+          x:Name="Root">
+		<StackPanel Grid.Row="1">
+			<TextBlock>Enter your phrase to convert to CW</TextBlock>
+			<TextBox Text="" Name="Phrase"></TextBox>
+			<Button HorizontalAlignment="Center" HotKey="Enter" Click="Button_Phrase">Play</Button>
+		</StackPanel>
 
-	<StackPanel>
-		<TextBlock>Enter your phrase to convert to CW</TextBlock>
-		<TextBox Text="" Name="Phrase"></TextBox>
-		<Button HorizontalAlignment="Center" Click="Button_OnClick">Play</Button>
-	</StackPanel>
+		<StackPanel Grid.Row="2">
+			<TextBlock>Enter your CW to convert to english</TextBlock>
+			<TextBox Text="" Name="CW"></TextBox>
+			<Button HorizontalAlignment="Center" HotKey="Enter" Click="Button_Cw">Play</Button>
+		</StackPanel>
+	</Grid>
 
 </Window>
