@@ -20,12 +20,14 @@
 			<TextBlock>Enter your phrase to convert to CW</TextBlock>
 			<TextBox Text="" Name="Phrase"></TextBox>
 			<Button HorizontalAlignment="Center" HotKey="Enter" Click="Button_Phrase">Play</Button>
+      <TextBlock Name="CwOutput"></TextBlock>
 		</StackPanel>
 
 		<StackPanel Grid.Row="2">
-			<TextBlock>Enter your CW to convert to english</TextBlock>
+			<TextBlock>Enter your CW to convert to text</TextBlock>
 			<TextBox Text="" Name="CW"></TextBox>
 			<Button HorizontalAlignment="Center" HotKey="Enter" Click="Button_Cw">Play</Button>
+      <TextBlock Name="TextOutput"></TextBlock>
 		</StackPanel>
 	</Grid>
 
