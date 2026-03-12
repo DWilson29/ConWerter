@@ -23,6 +23,7 @@ namespace ConWerter.Views
             if (CW.Text == null) return;
             string value = Converter.InvertMorse(CW.Text);
             Debug.WriteLine(value);
+            TextOutput.Text = value;
         }
     }
 }
