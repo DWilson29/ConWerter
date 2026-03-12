@@ -1,7 +1,8 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
-using System.Diagnostics;
+using Avalonia.Threading;
 using ConWerter.Models;
+using System.Diagnostics;
 
 namespace ConWerter.Views
 {
@@ -12,10 +13,10 @@ namespace ConWerter.Views
             InitializeComponent();
         }
 
-        private void Button_Phrase(object? sender, RoutedEventArgs e)
+        private async void Button_Phrase(object? sender, RoutedEventArgs e)
         {
             if (Phrase.Text == null) return;
-            Converter.PlaySound(Phrase.Text);
+            Converter.PlaySound(Phrase.Text, CwOutput);
         }
 
         private void Button_Cw(object? sender, RoutedEventArgs e)

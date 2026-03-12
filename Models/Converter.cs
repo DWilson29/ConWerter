@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Avalonia.Controls;
+using ConWerter.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
@@ -65,14 +67,25 @@ namespace ConWerter.Models
             ['$'] = "...-..-",
         };
 
-        static public void PlaySound(string text)
+        static private bool isPlaying = false;
+
+        static public void PlaySound(string text, TextBlock textBlock)
         {
+            if (isPlaying)
+            {
+                return;
+            }
+
+            isPlaying = true;
+            textBlock.Text = "";
+
             foreach (char c in text.ToLower())
             {
                 if (MorseCode.TryGetValue(c, out string code))
                 {
                     foreach (char symbol in code.ToCharArray())
                     {
+                        textBlock.Text += symbol;
                         if (symbol == '.')
                         {
                             Console.Beep(800, 200); // Dot: short beep
@@ -83,12 +96,14 @@ namespace ConWerter.Models
                         }
                     }
                     System.Threading.Thread.Sleep(200); // Pause between letters
+                    textBlock.Text += ' ';
                 }
                 else
                 {
                     Debug.WriteLine("Failed to convert character: " + c);
                 }
             }
+            isPlaying = false;
         }
 
         static public string InvertMorse(string cw)
