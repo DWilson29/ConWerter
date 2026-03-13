@@ -13,12 +13,6 @@ namespace ConWerter.Views
             InitializeComponent();
         }
 
-        private async void Button_Phrase(object? sender, RoutedEventArgs e)
-        {
-            if (Phrase.Text == null) return;
-            Converter.PlaySound(Phrase.Text, CwOutput);
-        }
-
         private void Button_Cw(object? sender, RoutedEventArgs e)
         {
             if (CW.Text == null) return;

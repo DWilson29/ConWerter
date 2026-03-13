@@ -1,16 +1,25 @@
-﻿using ConWerter.Models;
-using System.Text;
+﻿using Avalonia.Threading;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using ConWerter.Models;
+using System.Threading.Tasks;
 
 namespace ConWerter.ViewModels
 {
     public partial class MainWindowViewModel : ViewModelBase
     {
-        private string _cwOutput = string.Empty;
+        [ObservableProperty]
+        private string? _phrase;
 
-        public string CwOutput
+        [ObservableProperty]
+        private string? _cwOutput;
+
+        [RelayCommand]
+        private async Task ConvertPhrase()
         {
-            get => _cwOutput;
-            set => this.SetProperty(ref _cwOutput, value);
+            if (Phrase == null) return;
+            Dispatcher.UIThread.Post(async () => CwOutput = await Converter.PlaySound(Phrase), DispatcherPriority.Background);
         }
+
     }
 }

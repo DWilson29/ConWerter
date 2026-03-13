@@ -18,10 +18,10 @@
 		<TabItem Header="Phrase to CW">
 			<Grid RowDefinitions="Auto, *, Auto, *" Margin="10" x:Name="PhToCW">
 				<TextBlock Grid.Row="0"> Enter your phrase to convert to CW</TextBlock>
-				<TextBox Grid.Row="1" Margin="5" Text="" Name="Phrase"></TextBox>
-				<Button Grid.Row="2" Margin="5" HorizontalAlignment="Center" HotKey="Enter" Click="Button_Phrase">Play</Button>
+				<TextBox Grid.Row="1" Margin="5" Text="{Binding Phrase, Mode=TwoWay}>" Name="PhraseInput"></TextBox>
+				<Button Grid.Row="2" Margin="5" HorizontalAlignment="Center" HotKey="Enter" Command="{Binding ConvertPhraseCommand}">Play</Button>
 				<Border Grid.Row="3" BorderBrush="White" BorderThickness="2" Margin="5">
-					<TextBlock Name="CwOutput"></TextBlock>
+					<TextBlock Text="{Binding CwOutput, Mode=TwoWay}>" Name="CwOutput">></TextBlock>
 				</Border>
 			</Grid>
 		</TabItem>
@@ -29,7 +29,7 @@
 			<Grid RowDefinitions="Auto, *, Auto, *" Margin="10" x:Name="CWToPh">
 				<TextBlock Grid.Row="0">Enter your CW to convert to text</TextBlock>
 				<TextBox Grid.Row="1" Margin="5" Text="" Name="CW"></TextBox>
-				<Button Grid.Row="2" Margin="5" HorizontalAlignment="Center" HotKey="Enter" Click="Button_Cw">Play</Button>
+				<Button Grid.Row="2" Margin="5" HorizontalAlignment="Center" HotKey="Enter" Click="Button_Cw">Convert</Button>
 				<Border Grid.Row="3" BorderBrush="White" BorderThickness="2" Margin="5">
 					<TextBlock Name="TextOutput"></TextBlock>
 				</Border>

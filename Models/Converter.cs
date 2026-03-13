@@ -1,9 +1,8 @@
-﻿using Avalonia.Controls;
-using ConWerter.ViewModels;
+﻿using CommunityToolkit.Mvvm.Collections;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace ConWerter.Models
 {
@@ -69,15 +68,15 @@ namespace ConWerter.Models
 
         static private bool isPlaying = false;
 
-        static public void PlaySound(string text, TextBlock textBlock)
+        static public async Task<string> PlaySound(string text)
         {
             if (isPlaying)
             {
-                return;
+                return string.Empty;
             }
 
             isPlaying = true;
-            textBlock.Text = "";
+            string result = "";
 
             foreach (char c in text.ToLower())
             {
@@ -85,7 +84,7 @@ namespace ConWerter.Models
                 {
                     foreach (char symbol in code.ToCharArray())
                     {
-                        textBlock.Text += symbol;
+                        result += symbol;
                         if (symbol == '.')
                         {
                             Console.Beep(800, 200); // Dot: short beep
@@ -96,7 +95,7 @@ namespace ConWerter.Models
                         }
                     }
                     System.Threading.Thread.Sleep(200); // Pause between letters
-                    textBlock.Text += ' ';
+                    result += ' ';
                 }
                 else
                 {
@@ -104,6 +103,7 @@ namespace ConWerter.Models
                 }
             }
             isPlaying = false;
+            return result;
         }
 
         static public string InvertMorse(string cw)
