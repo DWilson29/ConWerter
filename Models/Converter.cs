@@ -1,7 +1,8 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.Collections;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace ConWerter.Models
 {
@@ -65,14 +66,25 @@ namespace ConWerter.Models
             ['$'] = "...-..-",
         };
 
-        static public void PlaySound(string text)
+        static private bool isPlaying = false;
+
+        static public async Task<string> PlaySound(string text)
         {
+            if (isPlaying)
+            {
+                return string.Empty;
+            }
+
+            isPlaying = true;
+            string result = "";
+
             foreach (char c in text.ToLower())
             {
                 if (MorseCode.TryGetValue(c, out string code))
                 {
                     foreach (char symbol in code.ToCharArray())
                     {
+                        result += symbol;
                         if (symbol == '.')
                         {
                             Console.Beep(800, 200); // Dot: short beep
@@ -83,12 +95,15 @@ namespace ConWerter.Models
                         }
                     }
                     System.Threading.Thread.Sleep(200); // Pause between letters
+                    result += ' ';
                 }
                 else
                 {
                     Debug.WriteLine("Failed to convert character: " + c);
                 }
             }
+            isPlaying = false;
+            return result;
         }
 
         static public string InvertMorse(string cw)
