@@ -3,9 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using OwnAudio.Core;
-using OwnAudioNET.Core;
+using Ownaudio.Core;
+using OwnaudioNET.Core;
 using OwnaudioNET.Mixing;
+using OwnaudioNET.Sources;
 
 namespace ConWerter.Models
 {
@@ -14,8 +15,8 @@ namespace ConWerter.Models
       private static string ShortBeep = "shortbeep.wav";
       private static string LongBeep = "longbeep.wav";
 
-      private FileSource fileSource0;
-      private FileSource fileSource1;
+      private static FileSource fileSource0;
+      private static FileSource fileSource1;
 
       static Player()
       {
@@ -31,7 +32,7 @@ namespace ConWerter.Models
 
         var Engine = OwnaudioNet.Engine!.UnderlyingEngine;
 
-        mixer = new AudioMixer(Engine, bufferSizeInFrames: 512);
+        AudioMixer mixer = new AudioMixer(Engine, bufferSizeInFrames: 512);
 
         mixer.MasterVolume = 0.8f;
 
@@ -58,13 +59,13 @@ namespace ConWerter.Models
         {
           fileSource1.Play();
 
-          while(fileSource1.State == SourceState.IsPlaying){
+          while(fileSource1.State == AudioState.Playing){
             Thread.Sleep(100);
           }}
         else{
           fileSource0.Play();
 
-          while(fileSource1.State == SourceState.IsPlaying){
+          while(fileSource1.State == AudioState.Playing){
             Thread.Sleep(100);
           }
         }

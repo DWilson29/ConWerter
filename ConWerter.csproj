@@ -23,6 +23,5 @@
     </PackageReference>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
     <PackageReference Include="OwnAudioSharp" Version="2.6.1" />
-    <PackageReference Include="OwnAudioSharp.Basic" Version="2.6.1" />
   </ItemGroup>
 </Project>
