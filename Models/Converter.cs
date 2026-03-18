@@ -87,11 +87,11 @@ namespace ConWerter.Models
                         result += symbol;
                         if (symbol == '.')
                         {
-                            Console.Beep(800, 200); // Dot: short beep
+                            Player.Beep(false, 1);
                         }
                         else if (symbol == '-')
                         {
-                            Console.Beep(800, 600); // Dash: long beep
+                            Player.Beep(true, 1);
                         }
                     }
                     System.Threading.Thread.Sleep(200); // Pause between letters
