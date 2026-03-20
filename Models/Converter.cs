@@ -68,7 +68,7 @@ namespace ConWerter.Models
 
         static private bool isPlaying = false;
 
-        static public async Task<string> PlaySound(string text)
+        static public string PlaySound(string text)
         {
             if (isPlaying)
             {
