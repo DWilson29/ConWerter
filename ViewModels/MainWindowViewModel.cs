@@ -18,7 +18,8 @@ namespace ConWerter.ViewModels
         private async Task ConvertPhrase()
         {
             if (Phrase == null) return;
-            Dispatcher.UIThread.Post(async () => CwOutput = await Converter.PlaySound(Phrase), DispatcherPriority.Background);
+            var data = await Task.Run(() => Converter.PlaySound(Phrase));
+            CwOutput = data;
         }
 
     }
