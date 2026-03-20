@@ -93,8 +93,8 @@ namespace ConWerter.Models
                         {
                             Player.Beep(true, 1);
                         }
+                        System.Threading.Thread.Sleep(200); // Pause between letters
                     }
-                    System.Threading.Thread.Sleep(200); // Pause between letters
                     result += ' ';
                 }
                 else
