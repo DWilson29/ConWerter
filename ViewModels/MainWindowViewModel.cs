@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using ConWerter.Models;
+using System;
 using System.Threading.Tasks;
 
 namespace ConWerter.ViewModels
@@ -23,7 +24,7 @@ namespace ConWerter.ViewModels
         private double _volume = 50;
 
         [ObservableProperty]
-        private double _speed;
+        private double _speed = 50;
 
         [RelayCommand]
         private async Task ConvertPhrase()
@@ -35,6 +36,11 @@ namespace ConWerter.ViewModels
         private float GetVolume()
         {
             return (float)(Volume / 100);
+        }
+
+        private float GetSpeed()
+        {
+            return (float)(100 - Speed) / 100;
         }
 
         public void PlaySound(string text)
@@ -53,13 +59,14 @@ namespace ConWerter.ViewModels
                 foreach (char symbol in code.ToCharArray())
                 {
                     CwOutput += symbol;
+
                     if (symbol == '.')
                     {
-                        Player.Beep(false, GetVolume());
+                        Player.Beep(false, GetVolume(), GetSpeed());
                     }
                     else if (symbol == '-')
                     {
-                        Player.Beep(true, GetVolume());
+                        Player.Beep(true, GetVolume(), GetSpeed());
                     }
                     System.Threading.Thread.Sleep(200); // Pause between letters
                 }

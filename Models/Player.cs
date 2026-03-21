@@ -5,13 +5,15 @@ using OwnaudioNET.Mixing;
 using OwnaudioNET.Sources;
 using OwnaudioNET;
 using System.Threading;
+using System.Diagnostics;
+using Logger;
 
 namespace ConWerter.Models
 {
   internal static class Player
   {
-    private static string ShortBeep = "Assets/shortbeep.wav";
-    private static string LongBeep = "Assets/longbeep.wav";
+    private static string BeepPath = "Assets/beep.wav";
+    private static float BeepMaxLength = 2;
 
     private static AudioMixer mixer;
 
@@ -38,36 +40,36 @@ namespace ConWerter.Models
       mixer.Start();
     }
 
-    static public void Beep(bool isLong, float volume)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="speed">Normalized value between 0 and 1 controlling speed</param>
+    /// <param name="isLong">Is it long beep?</param>
+    /// <returns></returns>
+    static private float GetBeepStartPosition(double speed, bool isLong, out TimeSpan length)
+    {
+      float secLength = (float)((isLong ? BeepMaxLength : BeepMaxLength / 2) * speed);
+      length = TimeSpan.FromSeconds(secLength);
+      return BeepMaxLength - secLength;
+    }
+
+    static public void Beep(bool isLong, float volume, float speed)
     {
       int targetSampleRate = OwnaudioNet.Engine!.Config.SampleRate;
       int targetChannels = OwnaudioNet.Engine!.Config.Channels;
 
-      FileSource fs;
-      if (isLong)
+      FileSource fs = new(BeepPath, 8192, targetSampleRate, targetChannels)
       {
-        fs = new(LongBeep, 8192, targetSampleRate, targetChannels);
-        fs.Volume = volume;
-        mixer.AddSource(fs);
-        fs.Play();
+          Volume = volume
+      };
+      mixer.AddSource(fs);
+      fs.StartOffset = GetBeepStartPosition(speed, isLong, out TimeSpan length);
 
-        while (fs.State == AudioState.Playing)
-        {
-          Thread.Sleep(100);
-        }
-      }
-      else
-      {
-        fs = new(ShortBeep, 8192, targetSampleRate, targetChannels);
-        fs.Volume = volume;
-        mixer.AddSource(fs);
-        fs.Play();
+      Log.Info($"{length.TotalSeconds} {fs.StartOffset}");
 
-        while (fs.State == AudioState.Playing)
-        {
-          Thread.Sleep(100);
-        }
-      }
+      fs.Play();
+      Thread.Sleep(length);
+
       mixer.RemoveSource(fs);
       fs.Dispose();
     }
