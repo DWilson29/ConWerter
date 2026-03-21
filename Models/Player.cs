@@ -31,9 +31,6 @@ namespace ConWerter.Models
 
       mixer = new(Engine, bufferSizeInFrames: 512);
 
-      // pull from UI
-      mixer.MasterVolume = 0.8f;
-
       mixer.SourceError += (sender, e) =>
       {
         Console.WriteLine($"Source error: {e.Message}");
@@ -50,6 +47,7 @@ namespace ConWerter.Models
       if (isLong)
       {
         fs = new(LongBeep, 8192, targetSampleRate, targetChannels);
+        fs.Volume = volume;
         mixer.AddSource(fs);
         fs.Play();
 
@@ -61,6 +59,7 @@ namespace ConWerter.Models
       else
       {
         fs = new(ShortBeep, 8192, targetSampleRate, targetChannels);
+        fs.Volume = volume;
         mixer.AddSource(fs);
         fs.Play();
 

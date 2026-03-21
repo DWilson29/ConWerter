@@ -19,11 +19,22 @@ namespace ConWerter.ViewModels
         [ObservableProperty]
         private string? _phraseOutput;
 
+        [ObservableProperty]
+        private double _volume = 50;
+
+        [ObservableProperty]
+        private double _speed;
+
         [RelayCommand]
         private async Task ConvertPhrase()
         {
             if (Phrase == null) return;
             await Task.Run(() => PlaySound(Phrase));
+        }
+
+        private float GetVolume()
+        {
+            return (float)(Volume / 100);
         }
 
         public void PlaySound(string text)
@@ -44,11 +55,11 @@ namespace ConWerter.ViewModels
                     CwOutput += symbol;
                     if (symbol == '.')
                     {
-                        Player.Beep(false, 1);
+                        Player.Beep(false, GetVolume());
                     }
                     else if (symbol == '-')
                     {
-                        Player.Beep(true, 1);
+                        Player.Beep(true, GetVolume());
                     }
                     System.Threading.Thread.Sleep(200); // Pause between letters
                 }
