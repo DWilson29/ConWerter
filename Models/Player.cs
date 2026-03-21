@@ -49,7 +49,7 @@ namespace ConWerter.Models
       FileSource fs;
       if (isLong)
       {
-        fs = new(ShortBeep, 8192, targetSampleRate, targetChannels);
+        fs = new(LongBeep, 8192, targetSampleRate, targetChannels);
         mixer.AddSource(fs);
         fs.Play();
 
@@ -60,7 +60,7 @@ namespace ConWerter.Models
       }
       else
       {
-        fs = new(LongBeep, 8192, targetSampleRate, targetChannels);
+        fs = new(ShortBeep, 8192, targetSampleRate, targetChannels);
         mixer.AddSource(fs);
         fs.Play();
 
