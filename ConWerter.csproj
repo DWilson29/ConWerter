@@ -5,6 +5,8 @@
     <Nullable>enable</Nullable>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute> 
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,8 +19,9 @@
     <PackageReference Include="Avalonia.Themes.Fluent" Version="12.0.4" />
     <PackageReference Include="Avalonia.Fonts.Inter" Version="12.0.4" />
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-    <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.3"/>
+    <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.3" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
+    <PackageReference Include="NAudio" Version="3.0.0-preview.19" />
     <PackageReference Include="OwnAudioSharp" Version="3.1.7" />
     </ItemGroup>
 
