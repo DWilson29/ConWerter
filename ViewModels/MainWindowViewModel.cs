@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using ConWerter.Models;
 using System;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace ConWerter.ViewModels
@@ -25,6 +26,72 @@ namespace ConWerter.ViewModels
 
         [ObservableProperty]
         private double _speed = 50;
+
+        [ObservableProperty]
+        private string? _selectedAudioFilePath;
+
+        [ObservableProperty]
+        private string? _audioStatus;
+
+        [ObservableProperty]
+        private string? _audioMorseOutput;
+
+        [ObservableProperty]
+        private string? _audioTextOutput;
+
+        [ObservableProperty]
+        private bool _isProcessingAudio;
+
+        // Valid FFT lengths for the Audio to CW transform, in slider-index order.
+        public static readonly int[] FftLengthOptions = { 16, 32, 64, 128, 256, 512, 1024, 2048, 4096 };
+
+        [ObservableProperty]
+        private int _fftLengthIndex = Array.IndexOf(FftLengthOptions, MorseAudioDecoder.DefaultFftLength);
+
+        public int FftLength => FftLengthOptions[FftLengthIndex];
+
+        partial void OnFftLengthIndexChanged(int value)
+        {
+            OnPropertyChanged(nameof(FftLength));
+        }
+
+        public bool IsNotProcessingAudio => !IsProcessingAudio;
+
+        partial void OnIsProcessingAudioChanged(bool value)
+        {
+            OnPropertyChanged(nameof(IsNotProcessingAudio));
+        }
+
+        public async Task LoadAndConvertAudioFileAsync(string filePath)
+        {
+            if (IsProcessingAudio) return;
+
+            SelectedAudioFilePath = filePath;
+            AudioMorseOutput = "";
+            AudioTextOutput = "";
+            IsProcessingAudio = true;
+            AudioStatus = $"Processing {Path.GetFileName(filePath)}...";
+
+            try
+            {
+                int fftLength = FftLength;
+                MorseAudioDecoder.DecodeResult result = await Task.Run(() => MorseAudioDecoder.Decode(filePath, fftLength));
+
+                AudioMorseOutput = string.IsNullOrWhiteSpace(result.Morse) ? "(no signal detected)" : result.Morse;
+                AudioTextOutput = string.IsNullOrWhiteSpace(result.Text) ? "(no signal detected)" : result.Text;
+                AudioStatus = $"Converted {Path.GetFileName(filePath)}";
+            }
+            catch (Exception ex)
+            {
+                AudioStatus = $"Error: {ex.Message}";
+                AudioMorseOutput = "";
+                AudioTextOutput = "";
+            }
+            finally
+            {
+                IsProcessingAudio = false;
+            }
+        }
 
         [RelayCommand]
         private async Task ConvertPhrase()
