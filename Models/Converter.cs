@@ -388,6 +388,22 @@ namespace ConWerter.Models
             return code ?? "";
         }
 
+        /// <summary>
+        /// Looks up the character represented by a single morse code token (e.g. ".-" => 'a').
+        /// Returns null if the code does not match any known character.
+        /// </summary>
+        static public char? MorseToChar(string code)
+        {
+            foreach ((char key, string encoded) in MorseCode)
+            {
+                if (encoded == code)
+                {
+                    return key;
+                }
+            }
+            return null;
+        }
+
         static public string InvertMorse(string cw)
         {
             string phrase = "";

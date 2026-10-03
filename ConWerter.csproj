@@ -22,6 +22,7 @@
     <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.3" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
     <PackageReference Include="NAudio" Version="3.0.0-preview.19" />
+    <PackageReference Include="NLayer.NAudioSupport" Version="3.0.0" />
     <PackageReference Include="OwnAudioSharp" Version="3.1.7" />
     </ItemGroup>
 
